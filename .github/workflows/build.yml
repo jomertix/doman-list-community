@@ -49,7 +49,6 @@ jobs:
 
       - name: Release and upload assets
         run: |
-          cd code || exit 1
           mv ../dlc.dat ../dlc.dat.* ./
           cd .. || exit 1
           gh release create ${{ env.TAG_NAME }} \
