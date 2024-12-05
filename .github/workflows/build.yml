@@ -23,8 +23,8 @@ jobs:
 
       - name: Set variables
         run: |
-          echo "RELEASE_NAME=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
-          echo "TAG_NAME=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+          echo "TAG_NAME=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+          echo "CURRENT_TIME=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_ENV
         shell: bash
 
       - name: Build dlc.dat file
@@ -50,8 +50,8 @@ jobs:
         run: |
           cd code || exit 1
           gh release create ${{ env.TAG_NAME }} \
-            -t "${{ env.RELEASE_NAME }}" \
-            -n "This release was created automatically." \
+            -n "This release was created automatically at ${{ env.CURRENT_TIME }} (GMT+0)." \
+            -t "${{ env.CURRENT_TIME }}" \
             ../dlc.dat \
             ../dlc.dat.*
         env:
