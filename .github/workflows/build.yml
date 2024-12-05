@@ -49,12 +49,10 @@ jobs:
 
       - name: Release and upload assets
         run: |
-          mv ../dlc.dat ../dlc.dat.* ./
-          cd .. || exit 1
           gh release create ${{ env.TAG_NAME }} \
             -t "${{ env.RELEASE_NAME }}" \
             -n "This release was created automatically." \
-            ./dlc.dat \
-            ./dlc.dat.*
+            dlc.dat \
+            dlc.dat.*
         env:
           GH_TOKEN: ${{ github.token }}
