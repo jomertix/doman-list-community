@@ -52,7 +52,7 @@ jobs:
           gh release create ${{ env.TAG_NAME }} \
             -t "${{ env.RELEASE_NAME }}" \
             -n "This release was created automatically." \
-            dlc.dat \
-            dlc.dat.*
+            ./code/dlc.dat \
+            ./code/dlc.dat.*
         env:
           GH_TOKEN: ${{ github.token }}
