@@ -31,7 +31,6 @@ jobs:
         run: |
           cd code || exit 1
           go run ./ --outputdir=../ --exportlists=category-ads-all,tld-cn,cn,tld-\!cn,geolocation-\!cn,apple,icloud
-          cd ../ && rm -rf code
 
       - name: Generate dlc.dat sha256 hash
         run: |
@@ -49,6 +48,7 @@ jobs:
 
       - name: Release and upload assets
         run: |
+          cd code || exit 1
           gh release create ${{ env.TAG_NAME }} \
             -t "${{ env.RELEASE_NAME }}" \
             -n "This release was created automatically." \
