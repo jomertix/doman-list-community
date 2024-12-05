@@ -47,19 +47,18 @@ jobs:
           xz -z -9 -k dlc.dat
           sha256sum dlc.dat.xz > dlc.dat.xz.sha256sum
 
-      - name: Git push assets to "release" branch
+      - name: Release and upload assets
         run: |
-          git init
-          git config --local user.name "github-actions[bot]"
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b release
-          git add *.txt *.sha256sum dlc.dat dlc.dat.zip dlc.dat.xz
-          git commit -m "${{ env.RELEASE_NAME }}"
-          git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-          git push -f -u origin release
+          gh release create ${{ env.TAG_NAME }} \
+            -t "${{ env.RELEASE_NAME }}" \
+            -n "This release was created automatically." \
+            ./dlc.dat \
+            ./dlc.dat.*
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Release and upload assets
         run: |
           gh release create ${{ env.TAG_NAME }} --generate-notes --latest --title ${{ env.RELEASE_NAME }} ./dlc.dat ./dlc.dat.*
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
